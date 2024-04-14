@@ -26,10 +26,10 @@ const SpecialProductItem = ({ data }) => {
 const Home = () => {
   const navigate = useNavigate();
   const [specialIsLoading, specialProducts] = useFetch(
-    "/products?type=special"
+    "/products?categories=Special"
   );
-  const [hotIsLoading, hotProducts] = useFetch("/products?type=hot");
-  const [newIsLoading, newProducts] = useFetch("/products?type=new");
+  const [hotIsLoading, hotProducts] = useFetch("/products?sort=hot");
+  const [newIsLoading, newProducts] = useFetch("/products?sort=new");
 
   return (
     <div className='flex flex-col gap-[5rem] justify-start items-center py-[3rem]'>

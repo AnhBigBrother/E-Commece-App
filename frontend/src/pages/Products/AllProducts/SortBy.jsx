@@ -1,12 +1,18 @@
-import Select from "react-select";
+import Select from 'react-select';
 
 const options = [
-  { label: "Price", value: "price" },
-  { label: "Best sellers", value: "bestsellers" },
-  { label: "Lastest", value: "lastest" },
+  { label: 'Price', value: 'price' },
+  { label: 'Best sellers', value: 'hot' },
+  { label: 'Lastest', value: 'new' },
 ];
-const SortBy = () => {
-  const handleSelect = () => {};
+const SortBy = ({ setSortOrder }) => {
+  const handleSelect = selectedItem => {
+    if (selectedItem === null) {
+      setSortOrder('');
+    } else {
+      setSortOrder(selectedItem.value);
+    }
+  };
   return (
     <Select
       name='Sort by'
@@ -17,63 +23,63 @@ const SortBy = () => {
       styles={{
         control: (base, state) => ({
           ...base,
-          width: "auto",
-          minHeight: "42px",
-          backgroundColor: "#525252",
-          color: "white",
-          border: "none",
-          borderRadius: "16px",
-          boxShadow: "none",
+          width: 'auto',
+          minHeight: '42px',
+          backgroundColor: '#525252',
+          color: 'white',
+          border: 'none',
+          borderRadius: '16px',
+          boxShadow: 'none',
         }),
         option: (base, item) => {
           return {
             ...base,
-            color: "white",
-            backgroundColor: item.isFocused ? "#ec4899" : "#525252",
-            borderRadius: "10px",
-            cursor: "pointer",
+            color: 'white',
+            backgroundColor: item.isFocused ? '#ec4899' : '#525252',
+            borderRadius: '10px',
+            cursor: 'pointer',
           };
         },
         menu: base => {
           return {
             ...base,
-            backgroundColor: "#525252",
-            borderRadius: "10px",
-            border: "none",
+            backgroundColor: '#525252',
+            borderRadius: '10px',
+            border: 'none',
           };
         },
         input: base => {
           return {
             ...base,
-            color: "white",
+            color: 'white',
           };
         },
         placeholder: base => {
           return {
             ...base,
-            color: "white",
+            color: 'white',
           };
         },
         singleValue: base => {
           return {
             ...base,
-            color: "white",
+            color: 'white',
           };
         },
         dropdownIndicator: base => {
           return {
             ...base,
-            cursor: "pointer",
-            color: "white",
-            "&:hover": { color: "#ec4899" },
+            cursor: 'pointer',
+            color: 'white',
+            '&:hover': { color: '#ec4899' },
           };
         },
         clearIndicator: base => {
           return {
             ...base,
-            cursor: "pointer",
-            color: "white",
-            "&:hover": { color: "#ec4899" },
+            cursor: 'pointer',
+            color: 'white',
+            '&:hover': { color: '#ec4899' },
           };
         },
       }}

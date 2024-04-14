@@ -30,7 +30,7 @@ const Navigation = () => {
   const adminArea = useRef();
   const [navBtnState, setNavBtnState] = useState("home");
   const [searchInput, setSearchInput] = useState("");
-  console.log("hello");
+
   const handleClickUser = () => {
     usermenu.current.classList.toggle("flex");
     usermenu.current.classList.toggle("hidden");
