@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "../api/axios";
+import { useEffect, useState } from 'react';
+import axios from '../api/axios';
 
 const useFetch = path => {
   const [isLoading, setIsLoading] = useState(false);

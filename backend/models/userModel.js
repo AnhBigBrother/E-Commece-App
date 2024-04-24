@@ -1,23 +1,24 @@
-import mongoose from "mongoose";
-import AppError from "../utils/AppError.js";
+import mongoose from 'mongoose';
+import AppError from '../utils/AppError.js';
 
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      require: true,
+      required: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
+      unique: true,
     },
     password: {
       type: String,
-      require: true,
+      required: true,
     },
     isAdmin: {
       type: Boolean,
-      require: true,
+      required: true,
       default: false,
     },
     address: {
@@ -26,19 +27,37 @@ const userSchema = new mongoose.Schema(
     phonenumber: {
       type: String,
     },
-    cart: { type: Array, default: [] },
-    favorite: { type: Array, default: [] },
-    ordered: { type: Array, default: [] },
+    cart: [
+      {
+        type: mongoose.Schema.ObjectId,
+        required: true,
+        ref: 'products',
+      },
+    ],
+    favorite: [
+      {
+        type: mongoose.Schema.ObjectId,
+        required: true,
+        ref: 'products',
+      },
+    ],
+    ordered: [
+      {
+        type: mongoose.Schema.ObjectId,
+        required: true,
+        ref: 'orders',
+      },
+    ],
   },
   { timestamps: true }
 );
 
 userSchema.statics.checkValid = async function (username, email, password) {
   if (!username || !email || !password) {
-    throw new AppError("Missing some user information", 400, false);
+    throw new AppError('Missing some user information', 400, false);
   }
 };
 
-const User = mongoose.model("users", userSchema);
+const User = mongoose.model('users', userSchema);
 
 export default User;

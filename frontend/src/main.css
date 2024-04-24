@@ -3,3 +3,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --toastify-toast-width: 320px;
+  --toastify-color-info: #3498db;
+  --toastify-color-success: #06800a;
+  --toastify-color-warning: rgb(202, 138, 4);
+  --toastify-color-error: #af2212;
+  --toastify-text-color-info: #ffffff;
+  --toastify-text-color-success: #ffffff;
+  --toastify-text-color-warning: #ffffff;
+  --toastify-text-color-error: #ffffff;
+  --toastify-color-progress-bgo: .3;
+  --bg-element: #F5F5F5;
+  --main-text-color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-element: #363636;
+    --main-text-color: #ffffff;
+  }
+}
+
+.slick-arrow:before {
+  color: var(--main-text-color);
+}

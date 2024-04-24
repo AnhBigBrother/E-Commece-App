@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "../../api/axios";
-import { toast } from "react-toastify";
-import validator from "validator";
-import { useNavigate } from "react-router-dom";
-import updateUserProfile from "../../redux/actions/updateUserProfile";
-import Loader from "../../components/Loader";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from '../../api/axios';
+import { toast } from 'react-toastify';
+import validator from 'validator';
+import { useNavigate } from 'react-router-dom';
+import updateUserProfile from '../../redux/actions/updateUserProfile';
+import ButtonLoader from '../../components/ButtonLoader';
 
 const Profile = () => {
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [address, setAddress] = useState('');
+  const [phonenumber, setPhonenumber] = useState('');
   const [isloading, setIsloading] = useState(false);
 
   const handleUpdateProfile = () => {
@@ -24,21 +24,21 @@ const Profile = () => {
     }
     if (password.length > 0) {
       if (password.length < 6) {
-        toast.warn("Password must be at least 6 character");
+        toast.warn('Password must be at least 6 character');
         return;
       }
       if (password !== confirmPassword) {
-        toast.warn("Password not match");
+        toast.warn('Password not match');
         return;
       }
     }
     if (phonenumber.length > 0 && !validator.isMobilePhone(phonenumber)) {
-      toast.warn("Invalid phone numbers");
+      toast.warn('Invalid phone numbers');
       return;
     }
     setIsloading(true);
     axios
-      .patch("/user", {
+      .patch('/user', {
         username,
         password,
         address,
@@ -46,16 +46,16 @@ const Profile = () => {
       })
       .then(res => {
         dispatch(updateUserProfile(res.data.results));
-        localStorage.setItem("user", JSON.stringify(res.data.results));
+        localStorage.setItem('user', JSON.stringify(res.data.results));
         setIsloading(false);
-        toast.success("Success!");
-        navigate("/home");
+        toast.success('Success!');
+        navigate('/home');
       })
       .catch(err => {
         console.log(err);
-        toast.error(err.response?.data?.error || "Something wrong, try later!");
+        toast.error(err.response?.data?.error || 'Something wrong, try later!');
         setIsloading(false);
-        navigate("/home");
+        navigate('/home');
       });
   };
 
@@ -67,7 +67,7 @@ const Profile = () => {
           <div className='py-[1rem] flex flex-col'>
             <label htmlFor='email'>Email</label>
             <input
-              className='border mt-1 p-2 rounded-md w-full bg-neutral-800'
+              className='border mt-1 p-2 rounded-md w-full border-neutral-300 bg-neutral-100 dark:bg-neutral-800'
               id='email'
               defaultValue={user.email}
               readOnly></input>
@@ -75,7 +75,7 @@ const Profile = () => {
           <div className='py-[1rem] flex flex-col'>
             <label htmlFor='password'>New password</label>
             <input
-              className='border mt-1 p-2 rounded-md w-full bg-neutral-800'
+              className='border mt-1 p-2 rounded-md w-full border-neutral-300 bg-neutral-100 dark:bg-neutral-800'
               type='password'
               id='password'
               value={password}
@@ -84,7 +84,7 @@ const Profile = () => {
           <div className='py-[1rem] flex flex-col'>
             <label htmlFor='confirmPassword'>Confirm new password</label>
             <input
-              className='border mt-1 p-2 rounded-md w-full bg-neutral-800'
+              className='border mt-1 p-2 rounded-md w-full border-neutral-300 bg-neutral-100 dark:bg-neutral-800'
               type='password'
               id='confirmPassword'
               value={confirmPassword}
@@ -95,7 +95,7 @@ const Profile = () => {
           <div className='py-[1rem] flex flex-col'>
             <label htmlFor='username'>Name</label>
             <input
-              className='border mt-1 p-2 rounded-md w-full bg-neutral-800'
+              className='border mt-1 p-2 rounded-md w-full border-neutral-300 bg-neutral-100 dark:bg-neutral-800'
               type='text'
               id='username'
               placeholder={user.username}
@@ -105,28 +105,28 @@ const Profile = () => {
           <div className='py-[1rem] flex flex-col'>
             <label htmlFor='address'>Address</label>
             <input
-              className='border mt-1 p-2 rounded-md w-full bg-neutral-800'
+              className='border mt-1 p-2 rounded-md w-full border-neutral-300 bg-neutral-100 dark:bg-neutral-800'
               id='address'
               type='text'
               value={address}
-              placeholder={user.address || ""}
+              placeholder={user.address || ''}
               onChange={e => setAddress(e.target.value)}></input>
           </div>
           <div className='py-[1rem] flex flex-col'>
             <label htmlFor='phonenumber'>Phone numbers</label>
             <input
-              className='border mt-1 p-2 rounded-md w-full bg-neutral-800'
+              className='border mt-1 p-2 rounded-md w-full border-neutral-300 bg-neutral-100 dark:bg-neutral-800'
               id='phonenumber'
               value={phonenumber}
-              placeholder={user.phonenumber || ""}
+              placeholder={user.phonenumber || ''}
               onChange={e => setPhonenumber(e.target.value)}></input>
           </div>
         </div>
       </div>
       <button
-        className='bg-pink-500 hover:bg-pink-700 px-4 py-2 rounded-md w-fit'
+        className='bg-rose-500 hover:bg-rose-700 px-4 py-2 rounded-md w-fit'
         onClick={() => handleUpdateProfile()}>
-        Update
+        {isloading ? <ButtonLoader /> : <span>Update</span>}
       </button>
     </div>
   );

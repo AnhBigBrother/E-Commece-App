@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import Select from 'react-select';
 
 const options = [
-  { label: 'Price', value: 'price' },
+  { label: 'Best price', value: 'price' },
   { label: 'Best sellers', value: 'hot' },
-  { label: 'Lastest', value: 'new' },
+  { label: 'Newest first', value: 'new' },
 ];
 const SortBy = ({ setSortOrder }) => {
   const handleSelect = selectedItem => {
@@ -19,14 +20,14 @@ const SortBy = ({ setSortOrder }) => {
       options={options}
       isClearable={true}
       onChange={handleSelect}
-      placeholder='Select...'
+      placeholder='Sort by...'
       styles={{
         control: (base, state) => ({
           ...base,
           width: 'auto',
           minHeight: '42px',
-          backgroundColor: '#525252',
-          color: 'white',
+          backgroundColor: 'var(--bg-element)',
+          color: 'var(--main-text-color)',
           border: 'none',
           borderRadius: '16px',
           boxShadow: 'none',
@@ -34,8 +35,8 @@ const SortBy = ({ setSortOrder }) => {
         option: (base, item) => {
           return {
             ...base,
-            color: 'white',
-            backgroundColor: item.isFocused ? '#ec4899' : '#525252',
+            color: 'var(--main-text-color)',
+            backgroundColor: item.isFocused ? '#F43F5E' : 'var(--bg-element)',
             borderRadius: '10px',
             cursor: 'pointer',
           };
@@ -43,7 +44,7 @@ const SortBy = ({ setSortOrder }) => {
         menu: base => {
           return {
             ...base,
-            backgroundColor: '#525252',
+            backgroundColor: 'var(--bg-element)',
             borderRadius: '10px',
             border: 'none',
           };
@@ -51,35 +52,35 @@ const SortBy = ({ setSortOrder }) => {
         input: base => {
           return {
             ...base,
-            color: 'white',
+            color: 'var(--main-text-color)',
           };
         },
         placeholder: base => {
           return {
             ...base,
-            color: 'white',
+            color: 'var(--main-text-color)',
           };
         },
         singleValue: base => {
           return {
             ...base,
-            color: 'white',
+            color: 'var(--main-text-color)',
           };
         },
         dropdownIndicator: base => {
           return {
             ...base,
             cursor: 'pointer',
-            color: 'white',
-            '&:hover': { color: '#ec4899' },
+            color: 'var(--main-text-color)',
+            '&:hover': { color: '#F43F5E' },
           };
         },
         clearIndicator: base => {
           return {
             ...base,
             cursor: 'pointer',
-            color: 'white',
-            '&:hover': { color: '#ec4899' },
+            color: 'var(--main-text-color)',
+            '&:hover': { color: '#F43F5E' },
           };
         },
       }}
@@ -87,4 +88,4 @@ const SortBy = ({ setSortOrder }) => {
   );
 };
 
-export default SortBy;
+export default memo(SortBy);

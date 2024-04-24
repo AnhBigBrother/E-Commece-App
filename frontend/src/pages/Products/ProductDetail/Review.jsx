@@ -1,16 +1,52 @@
-import { useEffect, useState } from "react";
-import { FaAngleDown } from "react-icons/fa6";
-import { FaAngleUp } from "react-icons/fa6";
-import RatingStar from "../../../components/RatingStar";
+import { useState } from 'react';
+import axios from '../../../api/axios.js';
+import { toast } from 'react-toastify';
+import RatingStar from '../../../components/RatingStar';
+import { FaAngleDown } from 'react-icons/fa6';
+import { FaAngleUp } from 'react-icons/fa6';
+import { FaRegStar } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
 
-const Review = ({ data }) => {
+const UserRated = ({ rated }) => {
+  return (
+    <div className='flex flex-row gap-1'>
+      {new Array(5).fill(0).map((e, i) => {
+        return i + 1 <= rated ? (
+          <FaStar
+            className='h-3 w-auto'
+            key={`little#${i}`}
+          />
+        ) : (
+          <FaRegStar
+            className='h-3 w-auto'
+            key={`little#${i}`}
+          />
+        );
+      })}
+    </div>
+  );
+};
+const Review = ({ data, id }) => {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [reviews, setReviews] = useState(data);
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
-  useEffect(() => {
-    console.log(rating);
-    console.log(comment);
-  }, [rating, comment]);
+  const [comment, setComment] = useState('');
+
+  const handleSubmitReview = () => {
+    axios
+      .patch(`/products/${id}`, {
+        rating,
+        comment,
+      })
+      .then(res => {
+        setReviews(pre => [...pre, res.data]);
+        toast.success('Your review has been added');
+      })
+      .catch(err => {
+        console.error(err);
+        toast.error(err.response.data.error || 'Something wrong, try later');
+      });
+  };
   return (
     <div className='flex flex-col gap-2 items-start w-full'>
       <div className='flex flex-col items-start justify-start w-full'>
@@ -18,33 +54,20 @@ const Review = ({ data }) => {
           className='flex flex-row w-full justify-between py-2 items-center'
           onClick={() => setIsReviewOpen(pre => !pre)}>
           <span className='text-xl font-semibold'>Review</span>
-          {!isReviewOpen ? (
-            <FaAngleDown className='h-5 w-auto' />
-          ) : (
-            <FaAngleUp className='h-5 w-auto' />
-          )}
+          {!isReviewOpen ? <FaAngleDown className='h-5 w-auto' /> : <FaAngleUp className='h-5 w-auto' />}
         </button>
         <div className='w-full border-t'></div>
         {isReviewOpen && (
           <div className='w-full py-5 flex flex-col gap-5 justify-start items-start'>
-            <div className='flex flex-col justify-start items-start'>
-              <p className='font-semibold'>John Doe</p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                fermentum dolor et gravida pulvinar. Phasellus cursus sapien
-                aliquam ante posuere dignissim. Suspendisse quis pretium felis.
-                Aenean porttitor mauris vel ornare fermentum. Sed sapien leo,
-                porta vitae felis a, pellentesque auctor odio. Donec
-                pellentesque interdum neque, non ultricies est elementum nec.
-                Proin sed lacus non enim vestibulum viverra. Etiam lobortis
-                porta libero non congue. Maecenas ultrices porttitor lorem,
-                porta pulvinar tortor porttitor sed. Mauris ornare justo
-                feugiat, semper felis vel, eleifend elit. Etiam quis est sed
-                urna vehicula tincidunt ac at neque. Nunc eu fermentum justo.
-                Fusce eu eleifend tellus. Etiam ac nunc lorem. Sed sed tortor
-                sed metus convallis hendrerit.
-              </p>
-            </div>
+            {reviews.map(e => (
+              <div
+                className='flex flex-col gap-1 justify-start items-start p-2 rounded-md bg-neutral-200 dark:bg-neutral-800 w-full'
+                key={e._id}>
+                <p className='font-bold'>{e.user.name}</p>
+                <UserRated rated={e.rating} />
+                <p className='font-light'>{e.comment}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>
@@ -65,7 +88,9 @@ const Review = ({ data }) => {
             value={comment}
             onChange={e => setComment(e.target.value)}></textarea>
         </div>
-        <button className='w-fit px-3 py-2 bg-pink-500 hover:bg-pink-700 rounded-md mt-3'>
+        <button
+          className='w-fit px-3 py-2 bg-rose-500 hover:bg-rose-700 rounded-md mt-3'
+          onClick={handleSubmitReview}>
           Submit
         </button>
       </div>

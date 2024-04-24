@@ -1,7 +1,9 @@
+import { memo } from 'react';
+
 const BrandRadioButton = ({ brand, selectedBrand, setSelectedBrand }) => {
   const handleClickItem = () => {
     if (selectedBrand === brand) {
-      setSelectedBrand("");
+      setSelectedBrand('');
     } else {
       setSelectedBrand(brand);
     }
@@ -11,10 +13,10 @@ const BrandRadioButton = ({ brand, selectedBrand, setSelectedBrand }) => {
     <div
       className='flex flex-row gap-2 items-center cursor-pointer'
       onClick={() => handleClickItem()}>
-      <div className='w-5 h-5 bg-neutral-600 rounded-full relative'>
+      <div className='w-5 h-5 bg-neutral-300 dark:bg-neutral-600 rounded-full relative'>
         {brand === selectedBrand && (
-          <div className='rounded-full border border-pink-500 w-full h-full flex items-center justify-center'>
-            <div className='rounded-full bg-pink-500 w-3 h-3'></div>
+          <div className='rounded-full border border-rose-500 w-full h-full flex items-center justify-center'>
+            <div className='rounded-full bg-rose-500 w-3 h-3'></div>
           </div>
         )}
       </div>
@@ -23,4 +25,4 @@ const BrandRadioButton = ({ brand, selectedBrand, setSelectedBrand }) => {
   );
 };
 
-export default BrandRadioButton;
+export default memo(BrandRadioButton);

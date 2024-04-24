@@ -1,5 +1,5 @@
-import { useState, memo } from "react";
-import { GiCheckMark } from "react-icons/gi";
+import { useState, memo } from 'react';
+import { GiCheckMark } from 'react-icons/gi';
 
 const CategoryCheckBox = ({ category, setSelectedCategories }) => {
   const [checked, setChecked] = useState(false);
@@ -15,11 +15,7 @@ const CategoryCheckBox = ({ category, setSelectedCategories }) => {
     <div
       className='flex flex-row gap-2 items-center cursor-pointer'
       onClick={() => handleClickItem()}>
-      <div className='w-5 h-5 bg-neutral-600 rounded-md relative'>
-        {checked && (
-          <GiCheckMark className='absolute bottom-0 left-0 w-6 h-6 rounded-md fill-pink-500' />
-        )}
-      </div>
+      <div className='w-5 h-5 bg-neutral-300 dark:bg-neutral-600 rounded-md relative'>{checked && <GiCheckMark className='absolute bottom-0 left-0 w-6 h-6 rounded-md fill-rose-500' />}</div>
       <p>{category.name}</p>
     </div>
   );

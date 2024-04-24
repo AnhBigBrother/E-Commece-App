@@ -1,6 +1,6 @@
-import express from "express";
-import multer from "multer";
-import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
+import express from 'express';
+import multer from 'multer';
+import { authenticate, authorizeAdmin } from '../middlewares/authMiddleware.js';
 import {
   uploadProduct,
   getAllProduct,
@@ -14,45 +14,26 @@ import {
   getAllBrands,
   getAllCategories,
   createCategory,
-} from "../controllers/adminController.js";
+  getAllOrders,
+  getOrderById,
+  editOrder,
+  cancelOrder,
+} from '../controllers/adminController.js';
 
 const upload = multer({ storage: multer.memoryStorage() });
 const adminRouter = express.Router();
 
-adminRouter
-  .route("/categories")
-  .get(getAllCategories)
-  .post(authenticate, authorizeAdmin, createCategory);
+adminRouter.route('/categories').get(getAllCategories).post(authenticate, authorizeAdmin, createCategory);
 
-adminRouter.route("/brands").get(getAllBrands);
+adminRouter.route('/brands').get(getAllBrands);
 
-adminRouter
-  .route("/products")
-  .get(authenticate, authorizeAdmin, getAllProduct)
-  .post(
-    authenticate,
-    authorizeAdmin,
-    upload.single("productImage"),
-    uploadProduct
-  );
+adminRouter.route('/products').get(authenticate, authorizeAdmin, getAllProduct).post(authenticate, authorizeAdmin, upload.single('productImage'), uploadProduct);
+adminRouter.route('/products/:id').get(authenticate, authorizeAdmin, getProductById).patch(authenticate, authorizeAdmin, upload.single('productImage'), updateProductById).delete(authenticate, authorizeAdmin, removeProductById);
 
-adminRouter
-  .route("/products/:id")
-  .get(authenticate, authorizeAdmin, getProductById)
-  .patch(
-    authenticate,
-    authorizeAdmin,
-    upload.single("productImage"),
-    updateProductById
-  )
-  .delete(authenticate, authorizeAdmin, removeProductById);
+adminRouter.route('/users').get(authenticate, authorizeAdmin, getAllUser);
+adminRouter.route('/users/:id').get(authenticate, authorizeAdmin, getUserInfo).patch(authenticate, authorizeAdmin, updateUserInfo).delete(authenticate, authorizeAdmin, deleteUser);
 
-adminRouter.route("/users").get(authenticate, authorizeAdmin, getAllUser);
-
-adminRouter
-  .route("/users/:id")
-  .get(authenticate, authorizeAdmin, getUserInfo)
-  .patch(authenticate, authorizeAdmin, updateUserInfo)
-  .delete(authenticate, authorizeAdmin, deleteUser);
+adminRouter.route('/orders').get(authenticate, authorizeAdmin, getAllOrders);
+adminRouter.route('/orders/:id').get(authenticate, authorizeAdmin, getOrderById).patch(authenticate, authorizeAdmin, editOrder).delete(authenticate, authorizeAdmin, cancelOrder);
 
 export default adminRouter;

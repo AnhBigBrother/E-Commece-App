@@ -1,24 +1,46 @@
-import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch";
-import Review from "./Review.jsx";
-import { toast } from "react-toastify";
-import { Skeleton3 } from "../../../components/Skeleton";
-import { FaStoreAlt } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
-import { MdSell } from "react-icons/md";
-import { MdRateReview } from "react-icons/md";
-import { PiShoppingCartFill } from "react-icons/pi";
-import { FaTags } from "react-icons/fa6";
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import updateCart from '../../../redux/actions/updateCart.js';
+import useFetch from '../../../hooks/useFetch';
+import Review from './Review.jsx';
+import ButtonLoader from '../../../components/ButtonLoader.jsx';
+import axios from '../../../api/axios.js';
+import { Skeleton3 } from '../../../components/Skeleton';
+import { FaStoreAlt } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
+import { MdSell } from 'react-icons/md';
+import { MdRateReview } from 'react-icons/md';
+import { PiShoppingCartFill } from 'react-icons/pi';
+import { FaTags } from 'react-icons/fa6';
 
 const ProductDetail = () => {
   const { id } = useParams();
-  console.log(id);
-  const [isLoading, data] = useFetch(`/products/${id}`);
-  console.log(data);
-  console.log(typeof data.categories);
+  const dispatch = useDispatch();
+  const [dataIsLoading, data] = useFetch(`/products/${id}`);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const handleAddToCart = () => {
+    if (isAddingToCart) return;
+    setIsAddingToCart(true);
+    axios
+      .post('/user/cart', { id })
+      .then(res => {
+        const newCart = {};
+        res.data.results.forEach(e => (newCart[e] = true));
+        dispatch(updateCart(newCart));
+        setIsAddingToCart(false);
+        toast.success('Added to cart');
+      })
+      .catch(err => {
+        console.error(err);
+        setIsAddingToCart(false);
+        toast.error(err.response.data.error || 'Something wrong, try later');
+      });
+  };
   return (
     <>
-      {isLoading ? (
+      {dataIsLoading ? (
         <Skeleton3 />
       ) : (
         <div className='py-[3rem] grid grid-cols-2 gap-[2rem]'>
@@ -37,7 +59,7 @@ const ProductDetail = () => {
                 <div className='flex flex-row gap-2 items-center'>
                   <FaTags className='h-5 w-auto' />
                   <span>Categories:</span>
-                  <p>{data.categories}</p>
+                  <p>{data.category}</p>
                 </div>
                 <div className='flex flex-row gap-2 items-center'>
                   <MdSell className='h-5 w-auto' />
@@ -56,20 +78,23 @@ const ProductDetail = () => {
                   <span>Review: {data.numReviews}</span>
                 </div>
               </div>
-              <button className='rounded-md py-2 px-3 bg-pink-500 hover:bg-pink-700 w-fit'>
-                Add to cart
+              <button
+                className='rounded-md py-2 px-3 bg-rose-500 hover:bg-rose-700 w-fit'
+                onClick={handleAddToCart}>
+                {isAddingToCart ? <ButtonLoader /> : <span>Add to cart</span>}
               </button>
             </div>
           </div>
           <div className='flex-grow flex flex-col gap-3 w-full'>
             <div className='flex flex-col'>
               <p className='w-full text-xl font-bold'>{data.name}</p>
-              <p className='w-full italic text-neutral-600'>
-                Create at: {new Date(data.createdAt).toDateString()}
-              </p>
+              <p className='w-full italic text-neutral-600'>Create at: {new Date(data.createdAt).toDateString()}</p>
             </div>
             <p>{data.description}</p>
-            <Review />
+            <Review
+              data={data.reviews}
+              id={id}
+            />
           </div>
         </div>
       )}
