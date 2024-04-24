@@ -11,6 +11,8 @@ import { BsCartPlus } from 'react-icons/bs';
 import { BsCartCheck } from 'react-icons/bs';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
+import { FaRegStar } from 'react-icons/fa';
 
 const ProductCard = ({ data }) => {
   const cart = useSelector(store => store.cart);
@@ -93,10 +95,28 @@ const ProductCard = ({ data }) => {
       <img
         className='aspect-video w-full object-cover rounded-t-md'
         src={data.imageUrl}></img>
-      <div className='flex flex-col p-3 w-full'>
+      <div className='flex flex-col gap-1 p-3 w-full'>
         <div className='flex flex-row gap-2 items-start justify-between'>
           <p className='text-lg font-semibold line-clamp-2'>{data.name}</p>
           <p className='text-lg font-semibold text-rose-500'>&#36;{data.price}</p>
+        </div>
+        <div className='flex flex-row gap-1 items-center'>
+          <div className='flex flex-row'>
+            {new Array(5).fill(0).map((e, i) => {
+              return i + 1 <= Math.round(data.rating) ? (
+                <FaStar
+                  className='w-4 h-4'
+                  key={`productStar#${i + 1}`}
+                />
+              ) : (
+                <FaRegStar
+                  className='w-4 h-4'
+                  key={`productStar#${i + 1}`}
+                />
+              );
+            })}
+          </div>
+          <span>{data.rating}/5</span>
         </div>
         <p className='line-clamp-2 mb-2 text-sm font-light'>{data.description}</p>
         <div className='flex flex-row items-center justify-between'>

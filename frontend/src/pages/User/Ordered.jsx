@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react';
+import { useState } from 'react';
 import axios from '../../api/axios';
 import useFetch from '../../hooks/useFetch';
 import PageLoader from '../../components/PageLoader';

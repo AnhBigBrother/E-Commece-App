@@ -42,7 +42,7 @@ const Checkout = () => {
       const items = [];
       state.forEach(s => items.push({ product: s.item._id, quantity: s.quantity }));
       axios
-        .post('/user/order', { items, shippingAddress: address, paymentMethod: 'payUponReceipt' })
+        .post('/user/order', { items, phonenumber, shippingAddress: address, paymentMethod: 'payUponReceipt' })
         .then(res => {
           console.log(res);
           const newCart = {};

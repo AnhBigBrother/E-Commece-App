@@ -150,7 +150,9 @@ const Navigation = () => {
             className='flex flex-row gap-1 py-3 items-start h-full group relative'
             onClick={() => handleClickUser()}>
             <LuUser className={`${(navBtnState === 'user' || navBtnState === 'auth') && 'stroke-rose-500'} w-6 h-auto group-hover:stroke-rose-500`} />
-            {Object.keys(cart).length + Object.keys(favorite).length > 0 && <p className='absolute left-3 top-1 w-5 h-5 p-[2px] text-center text-xs rounded-full bg-red-500'>{Object.keys(cart).length + Object.keys(favorite).length}</p>}
+            {Object.keys(cart).length + Object.keys(favorite).length > 0 && (
+              <p className='absolute left-3 top-1 w-5 h-5 aspect-square p-[2px] text-center text-xs rounded-full bg-red-500'>{Object.keys(cart).length + Object.keys(favorite).length}</p>
+            )}
             <p className={`${navBtnState === 'user' && 'text-rose-500'} text-lg group-hover:text-rose-500 max-w-24 whitespace-nowrap truncate`}>{user?.username}</p>
             <div
               ref={usermenu}
@@ -189,7 +191,7 @@ const Navigation = () => {
                 <div
                   className='relative pl-3 pr-10 py-2 w-full text-start text-nowrap hover:text-rose-500 flex flex-row gap-4'
                   onClick={() => navigate('/user/cart')}>
-                  {Object.keys(cart).length !== 0 && <p className='absolute left-6 top-0 w-4 h-4 text-center text-xs rounded-full bg-red-500'>{Object.keys(cart).length}</p>}
+                  {Object.keys(cart).length !== 0 && <p className='absolute left-6 top-0 w-4 h-4 text-center text-xs rounded-full text-black dark:text-white bg-red-500'>{Object.keys(cart).length}</p>}
                   <FiShoppingCart className='h-5 w-auto' />
                   <span>Cart</span>
                 </div>
@@ -198,7 +200,7 @@ const Navigation = () => {
                 <div
                   className='relative pl-3 pr-10 py-2 w-full text-start text-nowrap hover:text-rose-500 flex flex-row gap-4'
                   onClick={() => navigate('/user/favorite')}>
-                  {Object.keys(favorite).length !== 0 && <p className='absolute left-6 top-0 w-4 h-4 text-center text-xs rounded-full bg-red-500'>{Object.keys(favorite).length}</p>}
+                  {Object.keys(favorite).length !== 0 && <p className='absolute left-6 top-0 w-4 h-4 text-center text-xs rounded-full text-black dark:text-white bg-red-500'>{Object.keys(favorite).length}</p>}
                   <LuHeart className='h-5 w-auto' />
                   <span>Favorite</span>
                 </div>

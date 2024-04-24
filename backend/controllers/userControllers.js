@@ -98,8 +98,8 @@ const getUserOrders = preventErr(async (req, res) => {
 });
 const createOrder = preventErr(async (req, res) => {
   const user = req.user;
-  const { items, shippingAddress, paymentMethod } = req.body;
-  if (!items || !shippingAddress || !paymentMethod) throw new AppError('Missing infomation, order failed', 400, false);
+  const { items, phonenumber, shippingAddress, paymentMethod } = req.body;
+  if (!items || !phonenumber || !shippingAddress || !paymentMethod) throw new AppError('Missing infomation, order failed', 400, false);
 
   // calculate amount
   const itemList = await Promise.all(items.map(i => Product.findById(i.product)));
@@ -109,7 +109,7 @@ const createOrder = preventErr(async (req, res) => {
   itemList.forEach(i => (totalAmount += i.price * quantityMap[i._id]));
 
   // create order
-  const order = Order({ user: user._id, items, shippingAddress, totalAmount });
+  const order = Order({ user: user._id, items, phonenumber, shippingAddress, totalAmount });
   await order.save();
 
   // delete old items from cart and update user ordered

@@ -5,6 +5,7 @@ import { getStorage, ref, getDownloadURL, uploadBytesResumable, deleteObject } f
 import AppError from '../utils/AppError.js';
 import Product from '../models/productModel.js';
 import User from '../models/userModel.js';
+import Order from '../models/orderModel.js';
 import Category from '../models/categoryModel.js';
 
 const shoppunk = initializeApp(firebaseConfig);
@@ -173,7 +174,16 @@ const deleteUser = preventErr(async (req, res) => {
 });
 
 // <-----------------------order------------------------->
-const getAllOrders = preventErr(async (req, res) => {});
+const getAllOrders = preventErr(async (req, res) => {
+  const page = req.query.page || 0;
+  const results = await Order.find()
+    .sort({ createdAt: -1 })
+    .skip(6 * page)
+    .limit(6)
+    .populate('items.product');
+
+  res.status(200).json({ success: true, results });
+});
 const getOrderById = preventErr(async (req, res) => {});
 const editOrder = preventErr(async (req, res) => {});
 const cancelOrder = preventErr(async (req, res) => {});
