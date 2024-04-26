@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 :root {
-  --toastify-toast-width: 320px;
-  --toastify-color-info: #3498db;
-  --toastify-color-success: #06800a;
-  --toastify-color-warning: rgb(202, 138, 4);
-  --toastify-color-error: #af2212;
+  --toastify-toast-width: 'auto';
+  --toastify-color-info: #0085dd;
+  --toastify-color-success: #00be06;
+  --toastify-color-warning: rgb(255, 180, 17);
+  --toastify-color-error: #e41801;
   --toastify-text-color-info: #ffffff;
   --toastify-text-color-success: #ffffff;
   --toastify-text-color-warning: #ffffff;

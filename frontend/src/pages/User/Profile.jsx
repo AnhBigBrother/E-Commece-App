@@ -17,7 +17,6 @@ const Profile = () => {
   const [address, setAddress] = useState('');
   const [phonenumber, setPhonenumber] = useState('');
   const [isloading, setIsloading] = useState(false);
-
   const handleUpdateProfile = () => {
     if (isloading) {
       return;
@@ -115,6 +114,7 @@ const Profile = () => {
           <div className='py-[1rem] flex flex-col'>
             <label htmlFor='phonenumber'>Phone numbers</label>
             <input
+              type='number'
               className='border mt-1 p-2 rounded-md w-full border-neutral-300 bg-neutral-100 dark:bg-neutral-800'
               id='phonenumber'
               value={phonenumber}

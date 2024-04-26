@@ -1,11 +1,11 @@
 import { LuLoader2 } from 'react-icons/lu';
 
-const ButtonLoader = () => {
+const PageLoader = () => {
   return (
     <div className='w-full h-auto flex justify-center items-center'>
-      <LuLoader2 className='w-8 h-auto rounded-full animate-spin' />
+      <LuLoader2 className='w-9 h-auto rounded-full animate-spin' />
     </div>
   );
 };
 
-export default ButtonLoader;
+export default PageLoader;

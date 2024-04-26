@@ -16,7 +16,7 @@ const SpecialProductItem = ({ data }) => {
         src={data.imageUrl}></img>
       <div className='pt-2 flex flex-row gap-3 items-start justify-between'>
         <p className='font-semibold line-clamp-2'>{data.name}</p>
-        <p className='text-rose-500 rounded-full w-fit h-fit'>&#36;{data.price}</p>
+        <p className='text-rose-500 font-medium rounded-full w-fit h-fit'>&#36;{data.price}</p>
       </div>
     </div>
   );

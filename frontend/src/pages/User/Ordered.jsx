@@ -53,9 +53,11 @@ const Order = ({ order }) => {
         </div>
       ))}
       <div className='text-nowrap flex flex-col'>
-        <p className='font-semibold text-yellow-500 '>Total amount: &#36;{order.totalAmount}</p>
-        <p className='text-sm italic font-light'>Order at: {new Date(order.createdAt).toDateString()}</p>
-        <p className='text-sm italic font-light'>
+        <p className='text-lg font-medium'>Total amount: &#36;{order.totalAmount}</p>
+        <p className='text-sm'>
+          Order at: <span>{new Date(order.createdAt).toDateString()}</span>
+        </p>
+        <p className='text-sm'>
           Status: <span className={`${orderStatus === 'pending' ? 'text-yellow-500' : orderStatus === 'canceled' ? 'text-red-500' : 'text-green-500'}`}>{orderStatus}</span>
         </p>
         {orderStatus === 'pending' && (
@@ -76,6 +78,7 @@ const UserOrdered = () => {
   return (
     <div className='w-full flex flex-col gap-[1rem] py-[3rem]'>
       <p className='text-3xl'>Your orders</p>
+      {!isLoading && data.length === 0 && <p>You haven't ordered anything yet</p>}
       {isLoading ? <PageLoader /> : data.toReversed().map(order => <Order order={order} />)}
     </div>
   );

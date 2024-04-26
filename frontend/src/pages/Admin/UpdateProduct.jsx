@@ -124,9 +124,11 @@ const UpdateProduct = () => {
       return;
     }
     setLoader1(true);
+    let newCategory = categoryInput.trim();
+    newCategory = newCategory.charAt(0).toUpperCase() + newCategory.slice(1);
     axios
       .post('/admin/categories', {
-        name: categoryInput.trim(),
+        name: newCategory,
       })
       .then(res => {
         setCategoryInput('');
@@ -182,7 +184,7 @@ const UpdateProduct = () => {
           <label
             title='required'
             htmlFor='name'
-            className='block text-sm font-medium text-white'>
+            className='block text-sm font-medium'>
             Product name <span className='font-normal'>*</span>
           </label>
           <input
@@ -196,7 +198,7 @@ const UpdateProduct = () => {
           <label
             title='required'
             htmlFor='price'
-            className='block text-sm font-medium text-white'>
+            className='block text-sm font-medium'>
             Price (&#36;) <span className='font-normal'>*</span>
           </label>
           <input
@@ -210,7 +212,7 @@ const UpdateProduct = () => {
           <label
             title='required'
             htmlFor='brand'
-            className='block text-sm font-medium text-white'>
+            className='block text-sm font-medium'>
             Brand <span className='font-normal'>*</span>
           </label>
           <input
@@ -224,7 +226,7 @@ const UpdateProduct = () => {
           <label
             title='required'
             htmlFor='quantity'
-            className='block text-sm font-medium text-white'>
+            className='block text-sm font-medium'>
             Quantity <span className='font-normal'>*</span>
           </label>
           <input
@@ -236,7 +238,7 @@ const UpdateProduct = () => {
         </div>
         <div>
           <label
-            className='block text-sm font-medium text-white mb-1'
+            className='block text-sm font-medium mb-1'
             title='required'>
             Select category <span className='font-normal'>*</span>
           </label>
@@ -318,7 +320,7 @@ const UpdateProduct = () => {
           />
         </div>
         <div className=''>
-          <label className='block text-sm font-medium text-white mb-1'>Create category?</label>
+          <label className='block text-sm font-medium mb-1'>Create category?</label>
           <div className='flex flex-row gap-2 justify-center items-center'>
             <input
               className='border p-2 rounded-md w-full border-neutral-400 bg-neutral-100 dark:bg-neutral-800'
@@ -335,7 +337,7 @@ const UpdateProduct = () => {
           <label
             title='required'
             htmlFor='description'
-            className='block text-sm font-medium text-white'>
+            className='block text-sm font-medium'>
             Description <span className='font-normal'>*</span>
           </label>
           <textarea

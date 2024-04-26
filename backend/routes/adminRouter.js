@@ -16,8 +16,7 @@ import {
   createCategory,
   getAllOrders,
   getOrderById,
-  editOrder,
-  cancelOrder,
+  updateOrderState,
 } from '../controllers/adminController.js';
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -34,6 +33,6 @@ adminRouter.route('/users').get(authenticate, authorizeAdmin, getAllUser);
 adminRouter.route('/users/:id').get(authenticate, authorizeAdmin, getUserInfo).patch(authenticate, authorizeAdmin, updateUserInfo).delete(authenticate, authorizeAdmin, deleteUser);
 
 adminRouter.route('/orders').get(authenticate, authorizeAdmin, getAllOrders);
-adminRouter.route('/orders/:id').get(authenticate, authorizeAdmin, getOrderById).patch(authenticate, authorizeAdmin, editOrder).delete(authenticate, authorizeAdmin, cancelOrder);
+adminRouter.route('/orders/:id').get(authenticate, authorizeAdmin, getOrderById).patch(authenticate, authorizeAdmin, updateOrderState);
 
 export default adminRouter;

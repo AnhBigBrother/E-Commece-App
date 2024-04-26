@@ -68,7 +68,7 @@ const Cart = () => {
         )}
       </div>
       <div className='flex flex-col gap-3 w-[20rem]'>
-        <p className='text-xl font-semibold text-yellow-500'>Total price: &#36;{total}</p>
+        <p className='text-xl font-semibold text-rose-500'>Total price: &#36;{total}</p>
         <button
           className='p-2 w-full bg-rose-500 hover:bg-rose-700 rounded-md'
           onClick={handleCheckout}>

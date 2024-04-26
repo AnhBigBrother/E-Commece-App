@@ -62,7 +62,7 @@ const Login = () => {
           <div className='my-[2rem]'>
             <label
               htmlFor='email'
-              className='block text-sm font-medium text-white'>
+              className='block text-sm font-medium'>
               Email
             </label>
             <input
@@ -76,7 +76,7 @@ const Login = () => {
           <div className='my-[2rem]'>
             <label
               htmlFor='password'
-              className='block text-sm font-medium text-white'>
+              className='block text-sm font-medium'>
               Password
             </label>
             <input

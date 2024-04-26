@@ -2,8 +2,7 @@ import { useState } from 'react';
 import axios from '../../../api/axios.js';
 import { toast } from 'react-toastify';
 import RatingStar from '../../../components/RatingStar';
-import { FaAngleDown } from 'react-icons/fa6';
-import { FaAngleUp } from 'react-icons/fa6';
+import { LuChevronDown } from 'react-icons/lu';
 import { FaRegStar } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
 
@@ -33,6 +32,15 @@ const Review = ({ data, id }) => {
   const [comment, setComment] = useState('');
 
   const handleSubmitReview = () => {
+    if (!rating || !comment) {
+      if (!rating) {
+        toast.warn('Please add your rating');
+      }
+      if (!comment) {
+        toast.warn('Please add your comment');
+      }
+      return;
+    }
     axios
       .patch(`/products/${id}`, {
         rating,
@@ -48,31 +56,33 @@ const Review = ({ data, id }) => {
       });
   };
   return (
-    <div className='flex flex-col gap-2 items-start w-full'>
+    <div className='flex flex-col gap-1 items-start w-full'>
       <div className='flex flex-col items-start justify-start w-full'>
         <button
-          className='flex flex-row w-full justify-between py-2 items-center'
+          className='flex flex-row w-full justify-between py-1 items-center'
           onClick={() => setIsReviewOpen(pre => !pre)}>
           <span className='text-xl font-semibold'>Review</span>
-          {!isReviewOpen ? <FaAngleDown className='h-5 w-auto' /> : <FaAngleUp className='h-5 w-auto' />}
+          {<LuChevronDown className={`h-6 w-auto ${isReviewOpen ? 'rotate-180' : ''} duration-300`} />}
         </button>
         <div className='w-full border-t'></div>
-        {isReviewOpen && (
-          <div className='w-full py-5 flex flex-col gap-5 justify-start items-start'>
-            {reviews.map(e => (
+        <div className={`w-full ${isReviewOpen ? 'max-h-[20rem] overflow-auto' : 'max-h-0 overflow-hidden'} h-fit flex flex-col duration-300 justify-start items-start`}>
+          {reviews && reviews.length ? (
+            reviews.map(e => (
               <div
-                className='flex flex-col gap-1 justify-start items-start p-2 rounded-md bg-neutral-200 dark:bg-neutral-800 w-full'
+                className='flex flex-col gap-1 justify-start items-start p-2 mt-2 rounded-md bg-neutral-200 dark:bg-neutral-800 w-full'
                 key={e._id}>
                 <p className='font-bold'>{e.user.name}</p>
                 <UserRated rated={e.rating} />
                 <p className='font-light'>{e.comment}</p>
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          ) : (
+            <p className='mt-2 mb-1'>There are no reviews yet</p>
+          )}
+        </div>
       </div>
       <div className='flex flex-col items-start justify-start w-full'>
-        <p className='py-2 text-xl font-semibold'>Write your review</p>
+        <p className='py-1 text-xl font-semibold'>Write your review</p>
         <div className='w-full border-t'></div>
         <div className='pt-2 flex flex-row items-center'>
           <p className='text-xl font-semibold'>Rating:</p>

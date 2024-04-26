@@ -176,7 +176,11 @@ const deleteUser = preventErr(async (req, res) => {
 // <-----------------------order------------------------->
 const getAllOrders = preventErr(async (req, res) => {
   const page = req.query.page || 0;
-  const results = await Order.find()
+  const state = req.query.state;
+  const filter = {};
+  if (state) filter.state = state;
+
+  const results = await Order.find(filter)
     .sort({ createdAt: -1 })
     .skip(6 * page)
     .limit(6)
@@ -184,9 +188,22 @@ const getAllOrders = preventErr(async (req, res) => {
 
   res.status(200).json({ success: true, results });
 });
-const getOrderById = preventErr(async (req, res) => {});
-const editOrder = preventErr(async (req, res) => {});
-const cancelOrder = preventErr(async (req, res) => {});
+const getOrderById = preventErr(async (req, res) => {
+  throw new AppError('Not yet supported', 500, false);
+});
+const updateOrderState = preventErr(async (req, res) => {
+  const { newState } = req.body;
+  const { id } = req.params;
+  const order = await Order.findById(id);
+  if (!order) throw new AppError('Order not found', 404, false);
+  if (order.state === 'completed' && newState === 'canceled') throw new AppError('You cannot cancel this order', 400, false);
+  if (newState === 'completed') {
+    order.hasPaid = true;
+  }
+  order.state = newState;
+  await order.save();
+  res.status(200).json({ success: true, order });
+});
 
 export {
   uploadProduct,
@@ -203,6 +220,5 @@ export {
   createCategory,
   getAllOrders,
   getOrderById,
-  editOrder,
-  cancelOrder,
+  updateOrderState,
 };

@@ -68,7 +68,7 @@ const SignUp = () => {
           <div className='my-[2rem]'>
             <label
               htmlFor='username'
-              className='block text-sm font-medium text-white'>
+              className='block text-sm font-medium '>
               Username
             </label>
             <input
@@ -82,7 +82,7 @@ const SignUp = () => {
           <div className='my-[2rem]'>
             <label
               htmlFor='email'
-              className='block text-sm font-medium text-white'>
+              className='block text-sm font-medium '>
               Email
             </label>
             <input
@@ -96,7 +96,7 @@ const SignUp = () => {
           <div className='my-[2rem]'>
             <label
               htmlFor='password'
-              className='block text-sm font-medium text-white'>
+              className='block text-sm font-medium '>
               Password
             </label>
             <input
@@ -110,7 +110,7 @@ const SignUp = () => {
           <div className='my-[2rem]'>
             <label
               htmlFor='confirmPassword'
-              className='block text-sm font-medium text-white'>
+              className='block text-sm font-medium '>
               Confirm password
             </label>
             <input
@@ -124,7 +124,7 @@ const SignUp = () => {
           <button
             className='bg-rose-500 hover:bg-rose-700 px-4 py-2 rounded-md'
             onClick={() => handleClickSignup()}>
-            Sign up
+            {isloading ? <ButtonLoader /> : <span>Sign up</span>}
           </button>
         </div>
         <p className='py-6'>
@@ -132,7 +132,7 @@ const SignUp = () => {
           <a
             className='text-rose-500 hover:underline cursor-pointer'
             onClick={() => navigate('/auth/login')}>
-            {isloading ? <ButtonLoader /> : <span>Sign in</span>}
+            Sign in
           </a>
           &nbsp;here
         </p>

@@ -21,7 +21,7 @@ const SliderItem = ({ product }) => {
       <div className='grid grid-cols-2 gap-3'>
         <div className='col-span-1 flex flex-col'>
           <h1 className='text-lg font-bold'>{product.name}</h1>
-          <h1 className='font-bold'> &#36;{product.price}</h1>
+          <h1 className='font-bold text-rose-500'> &#36;{product.price}</h1>
           <p className='line-clamp-3 text-sm font-light'>{product.description}</p>
         </div>
         <div className='col-span-1 grid grid-cols-2 gap-2 h-fit w-fit'>

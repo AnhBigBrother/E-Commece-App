@@ -109,7 +109,7 @@ const createOrder = preventErr(async (req, res) => {
   itemList.forEach(i => (totalAmount += i.price * quantityMap[i._id]));
 
   // create order
-  const order = Order({ user: user._id, items, phonenumber, shippingAddress, totalAmount });
+  const order = Order({ user: user._id, items, phonenumber, paymentMethod, shippingAddress, totalAmount });
   await order.save();
 
   // delete old items from cart and update user ordered
@@ -123,6 +123,7 @@ const cancelOrder = preventErr(async (req, res) => {
   const { id } = req.params;
   const order = await Order.findById(id);
   if (!order) throw new AppError('Order not found', 404, false);
+  if (order.state !== 'pending') throw new AppError('You cannot cancel this order', 400, false);
   order.state = 'canceled';
   await order.save();
   res.status(200).json({ success: true, order });

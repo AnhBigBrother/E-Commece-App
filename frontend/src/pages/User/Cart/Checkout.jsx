@@ -13,10 +13,9 @@ const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [total, setTotal] = useState(0);
-  const [phonenumber, setPhonenumber] = useState(null);
+  const [phonenumber, setPhonenumber] = useState('');
   const [address, setAddress] = useState('');
   const [loading, setloading] = useState(false);
-
   useEffect(() => {
     let sum = 0;
     state.forEach(e => (sum += e.item.price * e.quantity));
@@ -90,7 +89,7 @@ const Checkout = () => {
           );
         })}
         <div className='grid grid-cols-7 gap-2'>
-          <p className='col-start-6 col-span-2 text-xl font-semibold text-nowrap text-yellow-500'>Total cost: &#36;{total}</p>
+          <p className='col-start-6 col-span-2 text-xl font-semibold text-nowrap text-rose-500'>Total cost: &#36;{total}</p>
         </div>
       </div>
       <div className='w-full flex gap-[5rem] pl-4'>

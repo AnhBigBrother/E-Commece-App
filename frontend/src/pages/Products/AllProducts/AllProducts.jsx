@@ -20,7 +20,7 @@ const AllProducts = () => {
   const setSortMemo = useCallback(x => setSortOrder(x), []);
   return (
     <div className='py-[3rem] flex flex-row gap-3 w-full'>
-      <div className='sticky top-24 p-5 mb-24 rounded-lg flex flex-col gap-10 w-fit h-fit bg-neutral-200 dark:bg-neutral-800'>
+      <div className='sticky top-24 p-5 mb-24 rounded-lg flex flex-col gap-6 w-fit h-fit bg-neutral-200 dark:bg-neutral-800'>
         <div className='flex flex-col gap-3'>
           <p className='w-full rounded-full py-2 px-5 text-center bg-white dark:bg-black text-nowrap'>Filter by categories</p>
           <div className='flex flex-col gap-1 px-4'>
@@ -62,7 +62,7 @@ const AllProducts = () => {
               <CardSkeleton />
             </>
           ) : (
-            <p>There is nothing match your search</p>
+            <p>There is nothing matched your search</p>
           )
         ) : (
           data.map((e, i) => {

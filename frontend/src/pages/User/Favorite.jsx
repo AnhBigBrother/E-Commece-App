@@ -8,7 +8,7 @@ const Favorite = () => {
   return (
     <div className='w-full py-[3rem] flex flex-col gap-5'>
       <p className='text-3xl text-center'>Favorited products</p>
-      {data.length === 0 && !isLoading && <p>You haven't liked any product yet</p>}
+      {data.length === 0 && !isLoading && <p className='w-full text-center'>You haven't liked any product yet</p>}
       <div className='w-full justify-center flex flex-wrap gap-[0.5rem] lg:gap-[1.5rem] 2xl:gap-[3rem]'>
         {isLoading ? (
           <>
