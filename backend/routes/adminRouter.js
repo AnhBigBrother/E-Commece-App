@@ -17,6 +17,7 @@ import {
   getAllOrders,
   getOrderById,
   updateOrderState,
+  getStatistic,
 } from '../controllers/adminController.js';
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -34,5 +35,7 @@ adminRouter.route('/users/:id').get(authenticate, authorizeAdmin, getUserInfo).p
 
 adminRouter.route('/orders').get(authenticate, authorizeAdmin, getAllOrders);
 adminRouter.route('/orders/:id').get(authenticate, authorizeAdmin, getOrderById).patch(authenticate, authorizeAdmin, updateOrderState);
+
+adminRouter.route('/statistic').get(authenticate, authorizeAdmin, getStatistic);
 
 export default adminRouter;

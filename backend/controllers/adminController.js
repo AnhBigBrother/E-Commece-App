@@ -7,6 +7,7 @@ import Product from '../models/productModel.js';
 import User from '../models/userModel.js';
 import Order from '../models/orderModel.js';
 import Category from '../models/categoryModel.js';
+import Statistic from '../models/statisticModel.js';
 
 const shoppunk = initializeApp(firebaseConfig);
 const storage = getStorage(shoppunk);
@@ -199,10 +200,27 @@ const updateOrderState = preventErr(async (req, res) => {
   if (order.state === 'completed' && newState === 'canceled') throw new AppError('You cannot cancel this order', 400, false);
   if (newState === 'completed') {
     order.hasPaid = true;
+    const date = new Date();
+    const time = date.toLocaleString('default', { month: 'short', year: 'numeric' });
+    const monthStatis = await Statistic.findOne({ time });
+    if (!monthStatis) {
+      const newMonthStatis = Statistic({ time, orders: [order._id], revenues: order.totalAmount });
+      await newMonthStatis.save();
+    } else {
+      monthStatis.orders.push(order._id);
+      monthStatis.revenues += order.totalAmount;
+      await monthStatis.save();
+    }
   }
   order.state = newState;
   await order.save();
   res.status(200).json({ success: true, order });
+});
+
+// <-----------------------statistic------------------------->
+const getStatistic = preventErr(async (req, res) => {
+  const results = await Statistic.find().sort({ createdAt: -1 }).limit(6);
+  res.status(200).json({ success: true, results });
 });
 
 export {
@@ -221,4 +239,5 @@ export {
   getAllOrders,
   getOrderById,
   updateOrderState,
+  getStatistic,
 };

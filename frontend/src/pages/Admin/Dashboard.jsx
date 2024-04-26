@@ -1,108 +1,69 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+import useFetch from '../../hooks/useFetch';
 import { BiDollar } from 'react-icons/bi';
 import { TbUsersPlus } from 'react-icons/tb';
 import { LuCalendarDays } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
-
-const data = [
-  {
-    name: 'Jan',
-    Orders: 4000,
-    Sales: 2400,
-  },
-  {
-    name: 'Feb',
-    Orders: 3000,
-    Sales: 1398,
-  },
-  {
-    name: 'Mar',
-    Orders: 2000,
-    Sales: 9800,
-  },
-  {
-    name: 'Apr',
-    Orders: 2780,
-    Sales: 3908,
-  },
-  {
-    name: 'May',
-    Orders: 1890,
-    Sales: 4800,
-  },
-  {
-    name: 'Jun',
-    Orders: 2390,
-    Sales: 3800,
-  },
-  {
-    name: 'Jul',
-    Orders: 3490,
-    Sales: 4300,
-  },
-  {
-    name: 'Aug',
-    Orders: 2000,
-    Sales: 9800,
-  },
-  {
-    name: 'Seb',
-    Orders: 2780,
-    Sales: 3908,
-  },
-  {
-    name: 'Oct',
-    Orders: 1890,
-    Sales: 4800,
-  },
-  {
-    name: 'Nov',
-    Orders: 2390,
-    Sales: 3800,
-  },
-  {
-    name: 'Dec',
-    Orders: 3490,
-    Sales: 4300,
-  },
-];
+import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [isLoading, data] = useFetch('/admin/statistic');
+  const [statisticData, setStatisticData] = useState([]);
+  const [revenue, setRevenue] = useState(0);
+  const [countOrder, setCountOrder] = useState(0);
+  const [countNewUser, setCountNewUser] = useState(0);
+  useEffect(() => {
+    const newStatisticData = data.map(m => {
+      return { time: m.time, Sales: m.revenues, Orders: m.orders.length };
+    });
+    let newRevenue = 0;
+    let newCountOrder = 0;
+    let newCountUser = 0;
+    data.forEach(m => {
+      newRevenue += m.revenues;
+      newCountOrder += m.orders.length;
+      newCountUser += m.newUsers;
+    });
+    setStatisticData(newStatisticData);
+    setRevenue(newRevenue);
+    setCountOrder(newCountOrder);
+    setCountNewUser(newCountUser);
+  }, [data]);
+
   return (
     <div className='w-full flex flex-col xl:flex-row justify-start xl:justify-center gap-10 xl:gap-16 pt-[3rem] items-center'>
       <div className='flex flex-col gap-10 items-center'>
-        <h1 className='font-semibold text-2xl'>Statistical</h1>
+        <h1 className='font-semibold text-2xl'>Statistics for the last 6 months</h1>
         <div className='flex flex-row gap-[2rem] justify-items-center items-center'>
           <div className='flex flex-col gap-3 items-center bg-neutral-200 dark:bg-black bg-opacity-75 p-5 rounded-lg w-[12rem] xl:w-[15rem]'>
             <div className='flex flex-row gap-2 items-center justify-start'>
               <BiDollar className='fill-rose-500 w-[1.5rem] h-[1.5rem]' />
               <p className='text-lg'>Revenue</p>
             </div>
-            <p className='text-xl'>1.000.000.000 &#36;</p>
+            <p className='text-xl font-medium'>{revenue} &#36;</p>
           </div>
           <div className='flex flex-col gap-3 items-center bg-neutral-200 dark:bg-black bg-opacity-75 p-5 rounded-lg w-[12rem] xl:w-[15rem]'>
             <div className='flex flex-row gap-2 items-center justify-start'>
               <LuCalendarDays className='stroke-rose-500 w-[1.5rem] h-[1.5rem]' />
               <p className='text-lg'>Total orders</p>
             </div>
-            <p className='text-xl'>1500</p>
+            <p className='text-xl font-medium'>{countOrder}</p>
           </div>
           <div className='flex flex-col gap-3 items-center bg-neutral-200 dark:bg-black bg-opacity-75 p-5 rounded-lg w-[12rem] xl:w-[15rem]'>
             <div className='flex flex-row gap-2 items-center justify-start'>
               <TbUsersPlus className='stroke-rose-500 w-[1.5rem] h-[1.5rem]' />
               <p className='text-lg'>New users</p>
             </div>
-            <p className='text-xl'>1000</p>
+            <p className='text-xl font-medium'>{countNewUser}</p>
           </div>
         </div>
         <div className='w-[40rem] h-[20rem] xl:w-[60rem] xl:h-[30rem]'>
           <ResponsiveContainer
             width='100%'
             height='100%'>
-            <BarChart data={data}>
-              <XAxis dataKey='name' />
+            <BarChart data={statisticData}>
+              <XAxis dataKey='time' />
               <YAxis
                 yAxisId='left'
                 orientation='left'
@@ -158,8 +119,6 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
-
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -191,3 +150,5 @@ const CustomTooltip = ({ active, payload, label }) => {
 
   return null;
 };
+
+export default Dashboard;

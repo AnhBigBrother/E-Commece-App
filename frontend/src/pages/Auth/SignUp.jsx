@@ -78,7 +78,6 @@ const SignUp = () => {
               value={username}
               onChange={e => setUsername(e.target.value)}></input>
           </div>
-
           <div className='my-[2rem]'>
             <label
               htmlFor='email'
