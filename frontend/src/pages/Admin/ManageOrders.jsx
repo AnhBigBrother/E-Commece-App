@@ -60,7 +60,7 @@ const Order = ({ order }) => {
         <div className='col-span-4 text-nowrap flex flex-col gap-1'>
           <p className='font-semibold text-rose-500 '>Total amount: &#36;{order.totalAmount}</p>
           <p>
-            User: <span className='font-medium'>{order.user}</span>
+            User: <span className='font-medium'>{order.user.username}</span>
           </p>
           <p>
             Order at: <span className='font-medium'>{new Date(order.createdAt).toDateString()}</span>
@@ -132,6 +132,7 @@ const ManageOrders = () => {
       setFilter(selectedItem.value);
     }
   };
+
   return (
     <div className='w-full flex flex-col gap-[1rem] py-[3rem]'>
       <div className='w-[30rem]'>

@@ -185,6 +185,7 @@ const getAllOrders = preventErr(async (req, res) => {
     .sort({ createdAt: -1 })
     .skip(6 * page)
     .limit(6)
+    .populate('user')
     .populate('items.product');
 
   res.status(200).json({ success: true, results });
