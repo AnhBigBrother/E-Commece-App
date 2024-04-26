@@ -63,7 +63,7 @@ const Order = ({ order }) => {
             User: <span className='font-medium'>{order.user.username}</span>
           </p>
           <p>
-            Order at: <span className='font-medium'>{new Date(order.createdAt).toDateString()}</span>
+            Order at: <span className='font-medium'>{new Date(order.createdAt).toUTCString()}</span>
           </p>
           <p>
             Phone number: <span className='font-medium'>{order.phonenumber}</span>
