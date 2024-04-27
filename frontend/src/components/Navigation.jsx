@@ -225,6 +225,7 @@ const Navigation = () => {
         {user.isAdmin && (
           <button
             ref={adminArea}
+            title='Admin role'
             onClick={() => handleClickAdmin()}
             className='absolute z-10 top-full translate-y-4 right-0 xl:left-full -translate-x-1 xl:translate-x-4 bg-neutral-300 dark:bg-neutral-700 p-2 rounded-md w-fit group'>
             <LuLayoutDashboard className='w-6 h-auto stroke-neutral-800 dark:stroke-neutral-200 group-hover:stroke-rose-500' />

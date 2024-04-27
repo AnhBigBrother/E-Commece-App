@@ -61,11 +61,11 @@ const Review = ({ data, id }) => {
         <button
           className='flex flex-row w-full justify-between py-1 items-center'
           onClick={() => setIsReviewOpen(pre => !pre)}>
-          <span className='text-xl font-semibold'>Review</span>
+          <span className='text-lg font-semibold'>Review</span>
           {<LuChevronDown className={`h-6 w-auto ${isReviewOpen ? 'rotate-180' : ''} duration-300`} />}
         </button>
         <div className='w-full border-t'></div>
-        <div className={`w-full ${isReviewOpen ? 'max-h-[20rem] overflow-auto' : 'max-h-0 overflow-hidden'} h-fit flex flex-col duration-300 justify-start items-start`}>
+        <div className={`w-full ${isReviewOpen ? 'max-h-[20rem] overflow-auto pb-3' : 'max-h-0 overflow-hidden pb-0'} h-fit flex flex-col duration-300 justify-start items-start px-2`}>
           {reviews && reviews.length ? (
             reviews.map(e => (
               <div
@@ -82,17 +82,17 @@ const Review = ({ data, id }) => {
         </div>
       </div>
       <div className='flex flex-col items-start justify-start w-full'>
-        <p className='py-1 text-xl font-semibold'>Write your review</p>
+        <p className='py-1 text-lg font-semibold'>Write your review</p>
         <div className='w-full border-t'></div>
         <div className='pt-2 flex flex-row items-center'>
-          <p className='text-xl font-semibold'>Rating:</p>
+          <p className='text-lg font-semibold'>Your rating:</p>
           <RatingStar
             rating={rating}
             setRating={setRating}
           />
         </div>
         <div className='flex flex-col gap-1 items-start w-full'>
-          <p className='text-xl font-semibold'>Comment:</p>
+          <p className='text-lg font-semibold'>Your comment:</p>
           <textarea
             className='w-full bg-inherit border border-neutral-400 rounded-lg resize-none h-[10rem] p-2'
             value={comment}

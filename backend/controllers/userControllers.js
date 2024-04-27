@@ -101,12 +101,18 @@ const createOrder = preventErr(async (req, res) => {
   const { items, phonenumber, shippingAddress, paymentMethod } = req.body;
   if (!items || !phonenumber || !shippingAddress || !paymentMethod) throw new AppError('Missing infomation, order failed', 400, false);
 
-  // calculate amount
+  // calculate amount & update product sold
   const itemList = await Promise.all(items.map(i => Product.findById(i.product)));
   const quantityMap = {};
   items.forEach(i => (quantityMap[i.product] = i.quantity));
   let totalAmount = 0;
-  itemList.forEach(i => (totalAmount += i.price * quantityMap[i._id]));
+  for (let i of itemList) {
+    totalAmount += i.price * quantityMap[i._id];
+    if (i.sold < i.quantity) {
+      i.sold = i.sold + 1;
+      await i.save();
+    } else throw new AppError(`Product ${i.name} is sold out`, 400, false);
+  }
 
   // create order
   const order = Order({ user: user._id, items, phonenumber, paymentMethod, shippingAddress, totalAmount });

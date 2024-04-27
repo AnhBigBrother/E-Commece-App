@@ -9,6 +9,7 @@ import ButtonLoader from '../../../components/ButtonLoader.jsx';
 import axios from '../../../api/axios.js';
 import { Skeleton3 } from '../../../components/Skeleton';
 import { FaStoreAlt } from 'react-icons/fa';
+import { FaRegStar } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
 import { MdSell } from 'react-icons/md';
 import { MdRateReview } from 'react-icons/md';
@@ -43,39 +44,51 @@ const ProductDetail = () => {
       {dataIsLoading ? (
         <Skeleton3 />
       ) : (
-        <div className='py-[3rem] grid grid-cols-2 gap-[2rem]'>
-          <div className='w-full flex flex-col gap-[1rem]'>
+        <div className='py-[3rem] flex flex-col gap-[2rem]'>
+          <div className='w-full grid grid-cols-2 gap-[1rem]'>
             <img
               src={data.imageUrl}
               className='rounded-lg w-full aspect-video object-cover'></img>
             <div className='flex flex-col gap-3 flex-grow'>
+              <div className='flex flex-col'>
+                <p className='w-full text-xl font-bold'>{data.name}</p>
+                <p className='w-full italic text-neutral-600'>Create at: {new Date(data.createdAt).toDateString()}</p>
+              </div>
+              <div className='flex flex-row gap-1 items-center'>
+                <p className='underline text-rose-500 font-semibold mr-1'>{`${data.rating}/5`}</p>
+                {new Array(5).fill(0).map((e, i) => {
+                  return i + 1 <= data.rating ? (
+                    <FaStar
+                      className='h-5 w-auto'
+                      key={`little#${i}`}
+                    />
+                  ) : (
+                    <FaRegStar
+                      className='h-5 w-auto'
+                      key={`little#${i}`}
+                    />
+                  );
+                })}
+              </div>
               <p className='text-3xl font-extrabold'>&#36;{data.price}</p>
-              <div className='grid grid-cols-2 gap-3'>
-                <div className='flex flex-row gap-2 items-center'>
-                  <FaStoreAlt className='h-5 w-auto' />
-                  <span>Brand:</span>
-                  <p>{data.brand}</p>
-                </div>
+              <div className='flex flex-col gap-3'>
                 <div className='flex flex-row gap-2 items-center'>
                   <FaTags className='h-5 w-auto' />
                   <span>Categories:</span>
                   <p>{data.category}</p>
                 </div>
                 <div className='flex flex-row gap-2 items-center'>
+                  <FaStoreAlt className='h-5 w-auto' />
+                  <span>Brand:</span>
+                  <p>{data.brand}</p>
+                </div>
+                <div className='flex flex-row gap-2 items-center'>
                   <MdSell className='h-5 w-auto' />
                   <span>Sold: {data.sold}</span>
                 </div>
-                <div className='flex flex-row gap-2 items-center'>
+                <div className='flex flex-row gap-2 items-center italic'>
                   <PiShoppingCartFill className='h-5 w-auto' />
-                  <span>Quantity: {data.quantity}</span>
-                </div>
-                <div className='flex flex-row gap-2 items-center'>
-                  <FaStar className='h-5 w-auto' />
-                  <span>Rating: {data.rating}/5</span>
-                </div>
-                <div className='flex flex-row gap-2 items-center'>
-                  <MdRateReview className='h-5 w-auto' />
-                  <span>Review: {data.numReviews}</span>
+                  <span>Remaining {data.quantity - data.sold} products</span>
                 </div>
               </div>
               <button
@@ -87,10 +100,9 @@ const ProductDetail = () => {
           </div>
           <div className='flex-grow flex flex-col gap-3 w-full'>
             <div className='flex flex-col'>
-              <p className='w-full text-xl font-bold'>{data.name}</p>
-              <p className='w-full italic text-neutral-600'>Create at: {new Date(data.createdAt).toDateString()}</p>
+              <p className='text-lg font-semibold'>Description</p>
+              <p>{data.description}</p>
             </div>
-            <p>{data.description}</p>
             <Review
               data={data.reviews}
               id={id}

@@ -9,7 +9,7 @@ const RatingStar = ({ rating, setRating }) => {
   return (
     <div className='w-auto h-auto flex flex-row px-1 rounded-md'>
       <div
-        className='w-7 h-7 p-[2px] cursor-pointer'
+        className='w-3 h-7 p-[2px] cursor-pointer'
         onMouseEnter={() => setHoverRating(0.5)}
         onMouseLeave={() => setHoverRating(0)}
         onClick={() => setRating(0)}></div>
