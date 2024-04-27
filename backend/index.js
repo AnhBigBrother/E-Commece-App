@@ -17,7 +17,7 @@ const port = process.env.PORT;
 const app = express();
 
 // cors
-const whitelist = ['http://localhost:5173', 'https://e-commece-5l1tzaqjs-bigbros-projects.vercel.app/'];
+const whitelist = ['http://localhost:5173', 'https://e-commece-bigbruhh.vercel.app'];
 const corsOptions = {
   credentials: true,
   origin: function (origin, callback) {
@@ -34,14 +34,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use((req, res, next) => {
-  console.log('----------');
-  console.log('Domain:', req.get('origin'));
-  console.log('PATH  :', req.path);
-  console.log('METHOD:', req.method);
-  console.log('----------');
-  next();
-});
 
 // connect DB, start server
 mongoose
