@@ -17,7 +17,7 @@ const port = process.env.PORT;
 const app = express();
 
 // cors
-const whitelist = ['http://localhost:5000', 'http://localhost:5173', 'https://www.google.com'];
+const whitelist = ['http://localhost:5173', 'e-commece-bigbruhh.vercel.app'];
 const corsOptions = {
   credentials: true,
   origin: function (origin, callback) {

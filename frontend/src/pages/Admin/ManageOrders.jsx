@@ -149,7 +149,6 @@ const ManageOrders = () => {
               minHeight: '42px',
               backgroundColor: 'var(--bg-element)',
               color: 'var(--main-text-color)',
-              border: 'none',
               borderRadius: '16px',
               boxShadow: 'none',
               border: '1px solid var(--main-text-color)',
