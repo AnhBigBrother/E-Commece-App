@@ -57,7 +57,7 @@ function App() {
         element={<Layout />}>
         <Route
           index
-          element={<Navigate to='/home' />}></Route>
+          element={<Home />}></Route>
         <Route
           path='home'
           element={<Home />}></Route>
