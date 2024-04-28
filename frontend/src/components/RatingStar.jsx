@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { FaStar } from 'react-icons/fa';
-import { FaRegStar } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa6';
+import { FaRegStar } from 'react-icons/fa6';
 import { memo } from 'react';
 
 const RatingStar = ({ rating, setRating }) => {

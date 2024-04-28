@@ -76,7 +76,7 @@ const ProductCard = ({ data }) => {
       });
   };
   return (
-    <div className='relative flex flex-col bg-neutral-200 dark:bg-neutral-800 rounded-md items-start w-[20rem] xl:w-[24rem] h-fit'>
+    <div className='relative flex flex-col bg-neutral-200 dark:bg-neutral-800 rounded-md items-start w-[20rem] xl:w-[24rem] h-fit flex-shrink-0'>
       <div className='absolute top-0 right-0'>
         {favorite[data._id] ? (
           <FaHeart
