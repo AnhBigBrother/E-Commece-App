@@ -43,8 +43,8 @@ const CardSkeleton = () => {
 };
 const Skeleton3 = () => {
   return (
-    <div className='py-[3rem] grid grid-cols-2 gap-[2rem] bg-transparent animate-pulse'>
-      <div className='w-full flex flex-col gap-[1rem]'>
+    <div className='py-[3rem] grid grid-cols-5 gap-[2rem] bg-transparent animate-pulse'>
+      <div className='w-full col-span-2 flex flex-col gap-[1rem]'>
         <div className='rounded-lg w-full h-fit aspect-video bg-neutral-200 dark:bg-neutral-800'></div>
         <div className='grid grid-cols-2 gap-3'>
           <div className='bg-neutral-200 dark:bg-neutral-800 w-4/5 h-[1.75rem] rounded-full'></div>
@@ -55,7 +55,7 @@ const Skeleton3 = () => {
           <div className='bg-neutral-200 dark:bg-neutral-800 w-4/5 h-[1.75rem] rounded-full'></div>
         </div>
       </div>
-      <div className='flex-grow flex flex-col gap-3 w-full'>
+      <div className='flex-grow col-span-3 flex flex-col gap-3 w-full'>
         <div className='bg-neutral-200 dark:bg-neutral-800 rounded-full w-1/2 h-[2.2rem]'></div>
         <div className='flex flex-col gap-2 w-full'>
           <div className='bg-neutral-200 dark:bg-neutral-800 w-full h-[1.5rem] rounded-full'></div>
