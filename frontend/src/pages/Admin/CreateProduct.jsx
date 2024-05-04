@@ -84,7 +84,7 @@ const CreateProduct = () => {
       })
       .catch(err => {
         console.log(err);
-        toast.err(err.response?.data.error || 'Something wrong, try later');
+        toast.error(err.response?.data.error || 'Something wrong, try later');
         setLoader2(false);
         navigate('/admin/products');
       });
