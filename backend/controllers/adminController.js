@@ -43,33 +43,32 @@ const createCategory = preventErr(async (req, res) => {
 
 // <-----------------------product------------------------->
 const uploadProduct = preventErr(async (req, res) => {
-  // if (!req.file || !req.file.buffer || !req.body) {
-  //   throw new AppError('Invalid request', 400, false);
-  // }
-  // if (req.file.size > 3145728) {
-  //   throw new AppError('Size of image must be less than 3MB', 413, false);
-  // }
-  // const { name, price, brand, quantity, category, description } = req.body;
-  // if (!name || !price || !brand || !quantity || !category || !description) {
-  //   throw new AppError('Missing information', 400, false);
-  // }
-  // const storageRef = ref(storage, `productImages/${req.file.originalname.split(' ').join('-')}`);
-  // const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, {
-  //   contentType: req.file.mimetype,
-  // });
-  // const imageUrl = await getDownloadURL(snapshot.ref);
-  // const newProduct = Product({
-  //   name,
-  //   price,
-  //   brand,
-  //   quantity,
-  //   category,
-  //   description,
-  //   imageUrl,
-  // });
-  // await newProduct.save();
-  // res.status(201).json({ success: true, results: newProduct._doc });
-  res.json({ hi: 'hello' });
+  if (!req.file || !req.file.buffer || !req.body) {
+    throw new AppError('Invalid request', 400, false);
+  }
+  if (req.file.size > 3145728) {
+    throw new AppError('Size of image must be less than 3MB', 413, false);
+  }
+  const { name, price, brand, quantity, category, description } = req.body;
+  if (!name || !price || !brand || !quantity || !category || !description) {
+    throw new AppError('Missing information', 400, false);
+  }
+  const storageRef = ref(storage, `productImages/${req.file.originalname.split(' ').join('-')}`);
+  const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, {
+    contentType: req.file.mimetype,
+  });
+  const imageUrl = await getDownloadURL(snapshot.ref);
+  const newProduct = Product({
+    name,
+    price,
+    brand,
+    quantity,
+    category,
+    description,
+    imageUrl,
+  });
+  await newProduct.save();
+  res.status(201).json({ success: true, results: newProduct._doc });
 });
 const getAllProduct = preventErr(async (req, res) => {
   const { page } = req.query || 0;

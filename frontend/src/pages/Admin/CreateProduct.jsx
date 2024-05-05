@@ -82,7 +82,6 @@ const CreateProduct = () => {
         toast.success('Product created!');
         console.log(res);
         setLoader2(false);
-        console.log('hello');
         navigate('/admin/products');
       })
       .catch(err => {
