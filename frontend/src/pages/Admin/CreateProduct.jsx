@@ -76,14 +76,13 @@ const CreateProduct = () => {
       .post('/admin/products', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Accept: 'multipart/form-data',
-          'Access-Control-Allow-Origin': 'https://e-commece-bigbruhh.vercel.app',
         },
       })
       .then(res => {
         toast.success('Product created!');
         console.log(res);
         setLoader2(false);
+        console.log('hello');
         navigate('/admin/products');
       })
       .catch(err => {
