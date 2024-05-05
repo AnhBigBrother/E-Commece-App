@@ -74,7 +74,11 @@ const CreateProduct = () => {
     formData.append('description', description.trim());
     axios
       .post('/admin/products', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Accept: 'multipart/form-data',
+          'Access-Control-Allow-Origin': 'https://e-commece-bigbruhh.vercel.app',
+        },
       })
       .then(res => {
         toast.success('Product created!');
