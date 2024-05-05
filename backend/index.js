@@ -35,6 +35,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.all('/', function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+  next();
+});
+
 // connect DB, start server
 mongoose
   .connect(process.env.DB_URI, console.log('Connected to DB successfuly!'))
