@@ -1,0 +1,5 @@
+- Full-stack E-commerce app with React, Redux, ExpressJS, MongoDB, etc.
+- Features:
+    - User role:  filtering, rating, and purchasing products, etc.
+    - Admin role: create, manage products, orders, view sales statistics, etc.
+- Deploy: https://bruhh-e-commece.onrender.com
